@@ -13,6 +13,7 @@
   <body>
     <div class="center">
       <h1>Login</h1>
+      
       <form method="post">
         <div class="txt_field">
           <input type="text" name = "email" required>
@@ -63,7 +64,7 @@
 %>
 		</p>
         <div class="signup_link">
-          Not a member? <a href="signup.jsp">Signup</a>
+          Not a member? <a href="signup.jsp">Signup</a><br>
         </div>
       </form>
     </div>

@@ -32,7 +32,7 @@
 		String passwd = "root";
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(url, uname, passwd);
-	
+		
 		PreparedStatement statement = conn.prepareStatement("select * from booking order by id  desc limit 1");
 		
 		ResultSet result = statement.executeQuery();
@@ -41,8 +41,8 @@
 		out.println("<em>" + result.getString(5) +
 		"<br>" + result.getString(6) +
 		"<br>" + result.getString(7) +
-		"<br><br>To be notified" +
-		"<br>" + result.getString(8) +
+		"<br><br>" + result.getString(8) +
+		"<br>" + result.getString(9) +
 		"<br>" + result.getString(1) +
 		"<br>" + result.getString(3) + " to " + result.getString(4) +
 		"<br><br></em>");

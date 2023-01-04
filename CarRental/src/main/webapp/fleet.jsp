@@ -130,7 +130,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                   Not applicable on bookings where fuel is included<br>
                   Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Maruti Suzuki Wagon R'">Book Now</a>
               </div>
             </div>
 
@@ -147,7 +147,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                   Not applicable on bookings where fuel is included<br>
                   Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Toyota RAV4 Prime'">Book Now</a>
               </div>
             </div>
 
@@ -164,7 +164,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                   Not applicable on bookings where fuel is included<br>
                   Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Toyota RAV4 Prime'">Book Now</a>
               </div>
             </div>
 
@@ -182,7 +182,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                   Not applicable on bookings where fuel is included<br>
                   Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+              <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Volkswagen Passat'">Book Now</a>
               </div>
             </div>
 
@@ -200,7 +200,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                     Not applicable on bookings where fuel is included<br>
                     Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Volkswagen Golf'">Book Now</a>
               </div>
             </div>
 
@@ -218,7 +218,7 @@
                 <p>Applicable on bookings with minimum duration of 3 days<br>
                   Not applicable on bookings where fuel is included<br>
                   Applicable on Rental bookings only</p>
-                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button">Book Now</a>
+                <a href="#" data-toggle="modal" data-target="#exampleModal" class="filled-button" onclick = "document.getElementById('car_name').value = 'Ford Mustang'">Book Now</a>
               </div>
             </div>
 
@@ -335,7 +335,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 70px;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-        <form method="post">
+        <form action = "insert.jsp" method="post">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Book Now</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -403,9 +403,13 @@
                     </div>
                    </div>
                   </div>
+                  
               
           </div>
           <div class="modal-footer">
+          	<div>
+        	  	 <input type="hidden" class="form-control" name="car_name" id="car_name">
+          	</div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
             <input type = "submit" class="btn btn-primary" value = "Book Now"/>
           </div>
@@ -413,46 +417,7 @@
         </div>
       </div>
     </div>
-<%
-	try{
-		String url = "jdbc:mysql://localhost:3306/car_rental";
-		String uname = "root";
-		String passwd = "root";
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection(url, uname, passwd);
-		
-		String pickUpLoc = request.getParameter("pickup");
-		String returnLoc = request.getParameter("return");
-		String pickUpDate = request.getParameter("pickupdate");
-		String returnDate = request.getParameter("returndate");
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String phoneNo = request.getParameter("phone");
-		
-		if(phoneNo != null){
-			PreparedStatement statement = conn.prepareStatement(
-					"insert into booking(pickup_loc, return_loc, pickup_date, return_date, name, email, phone_no) values(?, ?, ?, ?, ?, ?, ?)");
-			statement.setString(1, pickUpLoc);
-			statement.setString(2, returnLoc);
-			statement.setString(3, pickUpDate);
-			statement.setString(4, returnDate);
-			statement.setString(5, name);
-			statement.setString(6, email);
-			statement.setLong(7, Long.parseLong(phoneNo));
-		
-			int flag = statement.executeUpdate();
-			if(flag > 0){
-				response.sendRedirect("booked.jsp");
-			}
-			else{
-				out.println("<br>booking failed<br>");
-			}
-		}
-	}
-	catch(SQLException e){
-		out.println(e);
-	}
-%>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

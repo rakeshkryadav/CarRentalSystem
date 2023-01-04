@@ -112,6 +112,10 @@
       </div>
     </div>
     
+    <div style = "padding : 5px;">
+    <input type = "button" onclick = "location.href = 'editpage.jsp'" class="btn btn-primary" value = "Edit Booking"/>
+    <input type = "button" onclick = "location.href = 'cancel.jsp'" class="btn btn-primary" value = "Cancel Booking"/>
+    </div>
     
     <!-- Account Contents -->
     <div class = "section-heading">
@@ -135,10 +139,10 @@
 		
 		String email = (String)session.getAttribute("AccEmail");
 		
-		PreparedStatement statement = conn.prepareStatement("select * from booking where email = ?");
+		PreparedStatement statement = conn.prepareStatement("select * from booking where email = ? order by id desc");
 		statement.setString(1, email);
 		if("admin@gmail.com".equals(email)){
-			statement = conn.prepareStatement("select * from booking");
+			statement = conn.prepareStatement("select * from booking order by id desc");
 		}
 		
 		ResultSet result = statement.executeQuery();
@@ -147,32 +151,47 @@
 		out.println("<center>");
 		out.println("<table>");
 		out.println("<tr>");
+		out.println("<th>Booking ID</th>");
 		out.println("<th>Date</th>");
 		out.println("<th>Pick-Up Location</th>");
-		out.println("<th>Pick-Up Date</th>");
 		out.println("<th>Return Location</th>");
-		out.println("<th>Return Date</th>");
+		out.println("<th>Duration</th>");
 		out.println("<th>Name</th>");
-		out.println("<th>E-Mail</th>");
 		out.println("<th>Phone No</th>");
+		out.println("<th>Status</th>");
 		out.println("</tr>");
 		
 		while(result.next()){
 			//out.println("| " + result.getString(1) + " | " + result.getString(2) + " |<br>");
-			out.println("<tr>");
-			out.println("<td>" + result.getString(8) + "</td>");
+			if("cancelled".equals(result.getString(11))){
+				out.println("<tr style = \"background-color : #ff6363\">");
+			}
+			else{
+				out.println("<tr>");
+			}
+			out.println("<td>" + result.getString(10) + "</td>");
+			out.println("<td>" + result.getString(9) + "</td>");
 			out.println("<td>" + result.getString(1) + "</td>");
-			out.println("<td>" + result.getString(3) + "</td>");
 			out.println("<td>" + result.getString(2) + "</td>");
-			out.println("<td>" + result.getString(4) + "</td>");
+			out.println("<td>" + result.getString(3) + " to " + result.getString(3) + "</td>");
 			out.println("<td>" + result.getString(5) + "</td>");
-			out.println("<td>" + result.getString(6) + "</td>");
 			out.println("<td>" + result.getString(7) + "</td>");
+			out.println("<td>" + result.getString(11) + "</td>");
+			
+			//out.println("<td>");
+			
+			//out.println(" <input type=\"hidden\" class=\"form-control\" value = \"" + bookingID +"\" name=\"id\">");
+			//out.println("<input type = \"submit\" class=\"btn btn-primary\" value = \"Edit\"/>");
+			
+			//out.println("</td>");
 			out.println("</tr>");
 		}
 		
 		out.println("</table>");
+		out.println("</form");
 		out.println("</center>");
+		
+		
 	}
 	catch(SQLException e){
 		out.println(e);

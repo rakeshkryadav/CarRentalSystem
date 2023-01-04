@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "java.sql.*" %>
+<%
+	try{
+		String url = "jdbc:mysql://localhost:3306/car_rental";
+		String uname = "root";
+		String passwd = "root";
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(url, uname, passwd);
+		
+		String pickUpLoc = request.getParameter("pickup");
+		String returnLoc = request.getParameter("return");
+		String pickUpDate = request.getParameter("pickupdate");
+		String returnDate = request.getParameter("returndate");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String phoneNo = request.getParameter("phone");
+		
+		String id = request.getParameter("id");
+		
+		if(phoneNo != null){
+		
+			PreparedStatement statement = conn.prepareStatement("update booking set pickup_loc = ?, return_loc = ?, pickup_date = ?, return_date = ?, name = ?, email = ?, phone_no = ? where id = ?");
+		
+			statement.setString(1, pickUpLoc);
+			statement.setString(2, returnLoc);
+			statement.setString(3, pickUpDate);
+			statement.setString(4, returnDate);
+			statement.setString(5, name);
+			statement.setString(6, email);
+			statement.setLong(7, Long.parseLong(phoneNo));
+			statement.setString(8, id);
+			
+			int flag = statement.executeUpdate();
+			if(flag > 0){
+				response.sendRedirect("account.jsp");
+			}
+			else{
+				out.println("<br>booking failed<br>");
+			}
+		}
+	}
+	catch(SQLException e){
+		out.println(e);
+	}
+		
+%>
